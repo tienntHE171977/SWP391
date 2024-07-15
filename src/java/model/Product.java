@@ -4,6 +4,8 @@
  */
 package model;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author FPT
@@ -24,6 +26,7 @@ public class Product {
     private Date updateDate;
     private int sole; 
     private int avrRatedStar;
+    private List<String> images = new ArrayList<>();
 
     public Product() {
     }
@@ -165,6 +168,13 @@ public class Product {
     public void setAvrRatedStar(int avrRatedStar) {
         this.avrRatedStar = avrRatedStar;
     }
-    
-    
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
 }
