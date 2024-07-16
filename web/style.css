@@ -35,6 +35,20 @@ Version:1.0
 20. 404 Error CSS
 21. Footer CSS
 ========================================*/
+.pagination {
+  display: inline-block; /* Đảm bảo các phần tử trong .pagination nằm trên cùng một dòng */
+  color: black;
+  display: flex; /* Sử dụng flexbox để căn giữa */
+  justify-content: center;
+}
+
+
+
+/* Tô màu xanh lá cây cho trang hiện tại */
+.pagination.active {
+  background-color: #F7941D;
+  color: white;
+}
 .color-plate {
 	position: fixed;
 	display: block;

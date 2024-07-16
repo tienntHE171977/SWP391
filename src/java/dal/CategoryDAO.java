@@ -11,6 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.Trademark;
 
 
 /**
@@ -43,6 +48,12 @@ public class CategoryDAO extends DBContext{
         }
         return list;
     }
+    
+    
+    
+    
+    
+    
     public static void main(String[] args) {
         CategoryDAO categoryDAO = new CategoryDAO();
         ArrayList<Category> categories = categoryDAO.getAllCategory();

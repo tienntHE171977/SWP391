@@ -8,7 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import model.Category;
 import model.Trademark;
 
 /**
@@ -31,7 +35,7 @@ public class TrademarkDAO extends DBContext{
                 int trademarktStatus = rs.getInt(3);
                 
                 
-                Trademark tra = new Trademark(trademarkId, trademarktName, trademarktStatus);
+                Trademark tra = new Trademark(trademarkId, trademarktName,trademarktStatus);
 
                 list.add(tra);
 
@@ -43,28 +47,41 @@ public class TrademarkDAO extends DBContext{
         return list;
     }
     
-     public List<Trademark> getTrademarkByCategory(int categoryId) {
-        List<Trademark> list = new ArrayList<>();
-        String sql = "SELECT * FROM Trademark WHERE category_id = ? AND status = 1";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            
-            st.setInt(1, categoryId);
-            ResultSet rs = st.executeQuery();
-            
-                while (rs.next()) {
-                    int trademarkId = rs.getInt("trademark_id");
-                    String trademarktName = rs.getString("trademark_name");
-                    int trademarktStatus = rs.getInt("status");
+//    public List<Category> getCategoriesWithTrademarks() {
+//    List<Category> categories = new ArrayList<>();
+//    String sql = "SELECT c.category_id, c.category_name, t.trademark_id, t.trademark_name " +
+//                 "FROM Category c " +
+//                 "LEFT JOIN TrademarkCategory tc ON c.category_id = tc.category_id " +
+//                 "LEFT JOIN Trademark t ON tc.trademark_id = t.trademark_id";
+//
+//    try (PreparedStatement stmt = connection.prepareStatement(sql);
+//         ResultSet rs = stmt.executeQuery()) {
+//
+//        Map<Integer, Category> categoryMap = new HashMap<>();
+//
+//        while (rs.next()) {
+//            int categoryId = rs.getInt("category_id");
+//            String categoryName = rs.getString("category_name");
+//            int trademarkId = rs.getInt("trademark_id");
+//            String trademarkName = rs.getString("trademark_name");
+//           
+//
+//            Category category = categoryMap.computeIfAbsent(categoryId, id -> new Category(id, categoryName)); // Kiểm tra đã có Category này chưa
+//
+//            if (!rs.wasNull()) {
+//                category.getTrademarks().add(new Trademark(trademarkId, trademarkName));
+//            }
+//        }
+//
+//        return new ArrayList<>(categoryMap.values());
+//
+//    } catch (SQLException e) {
+//        // Xử lý ngoại lệ
+//        e.printStackTrace(); 
+//        return Collections.emptyList(); 
+//    }
+//}
 
-                    Trademark tra = new Trademark(trademarkId, trademarktName, trademarktStatus);
-                    list.add(tra);
-                }
-            
 
-        } catch (SQLException e) {
 
-        }
-        return list;
-    }
 }

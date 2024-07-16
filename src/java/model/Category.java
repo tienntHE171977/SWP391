@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author FPT
@@ -11,7 +13,7 @@ package model;
 public class Category {
     private int categoryId;
     private String categoryName;
-
+    //private List<Trademark> trademarks;
     public Category() {
     }
 
@@ -35,5 +37,6 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
     
 }

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zxx">
     <head>
@@ -45,6 +46,8 @@
         <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="css/responsive.css">
+
+
 
 
 
@@ -189,20 +192,16 @@
                                                 <ul class="nav main-menu menu navbar-nav">
                                                     <li class="active"><a href="#">Home</a></li>
                                                     <li><a href="#">Product</a></li>												
-                                                    <li><a href="#">Service</a></li>
+
                                                     <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                         <ul class="dropdown">
-                                                            <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                            <li><a href="cart.html">Cart</a></li>
+                                                            <li><a href="shopgrid">Shop Grid</a></li>
+                                                            <li><a href="shopgrid">Cart</a></li>
                                                             <li><a href="checkout.html">Checkout</a></li>
                                                         </ul>
                                                     </li>
                                                     <li><a href="#">Pages</a></li>									
-                                                    <li><a href="#">Blog<i class="ti-angle-down"></i></a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-                                                        </ul>
-                                                    </li>
+
                                                     <li><a href="contact.html">Contact Us</a></li>
                                                 </ul>
                                             </div>
@@ -247,107 +246,58 @@
                                 <h3 class="title">Categories</h3>
                                 <ul class="categor-list">
                                     <c:forEach items="${categories}" var="category">
-                                        <li><a href="shopgrid.jsp?categoryId=${category.categoryId}">${category.categoryName}</a></li>
-                                        </c:forEach>
-                                        <!-- Chỗ này đúng rồi  -->
+                                        <li>
+                                            <a href="shopgrid?categoryId=${category.categoryId}">${category.categoryName}</a>
+
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                             <!--/ End Single Widget -->
-                            <!-- Shop By Price -->
-                            <div class="single-widget range">
-                                <h3 class="title">Shop by Price</h3>
-                                <div class="price-filter">
-                                    <div class="price-filter-inner">
-                                        <div id="slider-range"></div>
-                                        <div class="price_slider_amount">
-                                            <div class="label-input">
-                                                <span>Range:</span><input type="text" id="amount" name="price" placeholder="Add Your Price"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="check-box-list">
-                                    <li>
-                                        <label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">$20 - $50<span class="count">(3)</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">$50 - $100<span class="count">(5)</span></label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">$100 - $250<span class="count">(8)</span></label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--/ End Shop By Price -->
+
                             <!-- Single Widget -->
                             <div class="single-widget recent-post">
-                                <h3 class="title">Recent post</h3>
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Girls Dress</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
+                                <div class="single-widget recent-post">
+                                    <h3 class="title">Latest product</h3>
+                                    <c:forEach items="${latestProducts}" var="product" end="2"> 
+                                        <div class="single-post first">
+                                            <div class="image">
+                                                <c:forEach items="${product.images}" var="image" end="0">
+                                                    <img src="${image}" alt="${product.productName}">
+                                                </c:forEach>
+                                            </div>
+                                            <div class="content">
+                                                <h5><a href="#" style="font-size: 12px;">${product.productName}</a></h5>
+                                                <p class="price">${product.salePrice} VND</p>
+                                                <ul class="reviews">
+                                                    <c:forEach begin="1" end="${product.avrRatedStar}" varStatus="loop">
+                                                        <li class="yellow"><i class="ti-star"></i></li>
+                                                        </c:forEach>
+                                                        <c:forEach begin="${product.avrRatedStar + 1}" end="5" varStatus="loop">
+                                                        <li><i class="ti-star"></i></li> 
+                                                        </c:forEach>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
                                 </div>
                                 <!-- End Single Post -->
+
                                 <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Women Clothings</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Single Post -->
-                                <!-- Single Post -->
-                                <div class="single-post first">
-                                    <div class="image">
-                                        <img src="https://via.placeholder.com/75x75" alt="#">
-                                    </div>
-                                    <div class="content">
-                                        <h5><a href="#">Man Tshirt</a></h5>
-                                        <p class="price">$99.50</p>
-                                        <ul class="reviews">
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                            <li class="yellow"><i class="ti-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                
                                 <!-- End Single Post -->
                             </div>
                             <!--/ End Single Widget -->
                             <!-- Single Widget -->
                             <div class="single-widget category">
-                                <h3 class="title">Manufacturers</h3>
-                                <ul class="categor-list">
-                                    <li><a href="#">Forever</a></li>
-                                    <li><a href="#">giordano</a></li>
-                                    <li><a href="#">abercrombie</a></li>
-                                    <li><a href="#">ecko united</a></li>
-                                    <li><a href="#">zara</a></li>
-                                </ul>
+                                <h3 class="title">New Products</h3>
+                                    <ul class="categor-list">
+                                        <c:forEach items="${trademarks}" var="tra">
+                                            <li><a href="shopgrid?trademarkId=${tra.trademarkId}">${tra.trademarkName}</a></li>
+                                            </c:forEach>
+
+
+                                    </ul>
                             </div>
                             <!--/ End Single Widget -->
                         </div>
@@ -358,15 +308,7 @@
                                 <!-- Shop Top -->
                                 <div class="shop-top">
                                     <div class="shop-shorter">
-                                        <div class="single-shorter">
-                                            <label>Show :</label>
-                                            <select>
-                                                <option selected="selected">09</option>
-                                                <option>15</option>
-                                                <option>25</option>
-                                                <option>30</option>
-                                            </select>
-                                        </div>
+
                                         <div class="single-shorter">
                                             <label>Sort By :</label>
                                             <select>
@@ -376,10 +318,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <ul class="view-mode">
-                                        <li class="active"><a href="shop-grid.html"><i class="fa fa-th-large"></i></a></li>
-                                        <li><a href="shop-list.html"><i class="fa fa-th-list"></i></a></li>
-                                    </ul>
+
                                 </div>
                                 <!--/ End Shop Top -->
                             </div>
@@ -416,12 +355,45 @@
                                 </div>
                             </c:forEach>
                         </div>
-
                     </div>
+
+
+                    <div class="row">
+                        <div class="col-12" style="padding-left: 600px">
+                            <div class="pagination">
+                                <c:if test="${page > 1}">
+                                    <a href="shopgrid?page=${page - 1}&categoryId=${categoryId}&trademarkId=${trademarkId}" style="display: inline-block; width: 30px; height: 30px; border: 1px solid #ddd; text-align: center; line-height: 30px;">&laquo;</a>
+                                </c:if>
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <a href="shopgrid?page=${i}&categoryId=${categoryId}&trademarkId=${trademarkId}" 
+                                       class="${i == page ? 'active' : ''}"
+                                       style="display: inline-block; width: 30px; height: 30px; border: 1px solid #ddd; text-align: center; line-height: 30px; ${i == page ? 'background-color: #F7941D; color: white;' : ''}">
+                                        ${i}
+                                    </a>
+                                </c:forEach>
+                                <c:if test="${page < totalPages}">
+                                    <a href="shopgrid?page=${page + 1}&categoryId=${categoryId}&trademarkId=${trademarkId}" style="display: inline-block; width: 30px; height: 30px; border: 1px solid #ddd; text-align: center; line-height: 30px;">&raquo;</a>
+                                </c:if>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Category ID: <c:out value="${categoryId}"/></p>
+                            <p>Trademark ID: <c:out value="${trademarkId}"/></p>
+                            <p>Total Products: <c:out value="${totalProducts}"/></p>
+                            <p>Total Pages: <c:out value="${totalPages}"/></p>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </section>
 <!--/ End Product Style 1  -->	
@@ -642,7 +614,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-12">
                         <div class="left">
-                            <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+                            <p>Copyright © 2024 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-12">

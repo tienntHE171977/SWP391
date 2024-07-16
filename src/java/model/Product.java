@@ -26,12 +26,12 @@ public class Product {
     private Date updateDate;
     private int sole; 
     private int avrRatedStar;
-    private List<String> images = new ArrayList<>();
+    private List<String> images ;
 
     public Product() {
     }
 
-    public Product(int productId, String productName, int originalPrice, boolean sale, int salePrice, String productHighlights, String productDescription, int trademarkId, boolean status, int quantity, int guarantee, int categoryId, Date updateDate, int sole, int avrRatedStar) {
+    public Product(int productId, String productName, int originalPrice, boolean sale, int salePrice, String productHighlights, String productDescription, int trademarkId, boolean status, int quantity, int guarantee, int categoryId, Date updateDate, int sole, int avrRatedStar, List<String> images) {
         this.productId = productId;
         this.productName = productName;
         this.originalPrice = originalPrice;
@@ -47,6 +47,7 @@ public class Product {
         this.updateDate = updateDate;
         this.sole = sole;
         this.avrRatedStar = avrRatedStar;
+        this.images = images;
     }
 
     public int getProductId() {
@@ -176,5 +177,7 @@ public class Product {
     public void setImages(List<String> images) {
         this.images = images;
     }
+    
 
+    
 }
