@@ -87,11 +87,21 @@ public class ShopGridServlet extends HttpServlet {
     int pageSize = 9;
     String pageStr = request.getParameter("page");
     int page = (pageStr != null && !pageStr.isEmpty()) ? Integer.parseInt(pageStr) : 1;
+    int totalPages;
+    int totalProducts;
+     
+    if(categoryId==0 & trademarkId==0){
+         totalProducts = productDAO.getTotalProduct();
+         totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+    } else{
+         totalProducts = productDAO.getTotalProducts(categoryId, trademarkId); 
+          totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        
+    }
+   
+    // Gọi phương thức đã sửa
 
-    // Lấy tổng số sản phẩm
-    int totalProducts = productDAO.getTotalProducts(categoryId, trademarkId); // Gọi phương thức đã sửa
-
-    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+    
 
     // Lấy danh sách sản phẩm dựa trên categoryId và trademarkId
     List<Product> products;
@@ -100,7 +110,7 @@ public class ShopGridServlet extends HttpServlet {
     } else if (trademarkId != 0) {
         products = productDAO.getProductByTrademarkId(trademarkId, page, pageSize);
     } else {
-        products = productDAO.getAllProduct();
+        products = productDAO.getListPageByIndex(page);
     }
 
     List<Product> latestProducts = productDAO.getLatestProducts(3);

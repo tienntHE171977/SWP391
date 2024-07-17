@@ -292,6 +292,47 @@ public List<Product> getProductsByCategoryId(int categoryId, int page, int pageS
     }
     return list;
 }
+       PreparedStatement ps = null;
+    ResultSet rs = null;
+    public int getTotalProduct(){
+        int count=0;
+      
+        String sql = "select  COUNT(product_id) from Product";
+          try {
+            ps = connection.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {  // Move the cursor to the first row
+            count = rs.getInt(1);  // Retrieve the value from the first column
+        }
+
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+        return count;
+    }
+       public List<Product> getListPageByIndex(int index) {
+        List<Product> list = new ArrayList<>();
+
+        String query = "select * from Product\n"
+                + "  order by product_id\n"
+                + "  offset ? rows fetch next 9 rows only;";
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, (index - 1) * 9);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1), rs.getString(15), rs.getInt(2), rs.getBoolean(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getDate(12), rs.getInt(13), rs.getInt(14)));
+            }
+
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+
+        return list;
+    }
     
     
     
@@ -319,6 +360,12 @@ public List<Product> getProductsByCategoryId(int categoryId, int page, int pageS
     // Test case 4: Lọc theo cả categoryId và trademarkId
     int totalProductsByBoth = productDAO.getTotalProducts(categoryIdToTest, trademarkIdToTest);
     System.out.println("Total products (category " + categoryIdToTest + ", trademark " + trademarkIdToTest + "): " + totalProductsByBoth);
+    int count ;
+    count = productDAO.getTotalProduct();
+        System.out.println(count);
+         List<Product> list = productDAO.getListPageByIndex(2);
+         System.out.println(list.get(0).getProductName());
     }
+   
     
 }

@@ -49,6 +49,24 @@ public class Product {
         this.avrRatedStar = avrRatedStar;
         this.images = images;
     }
+       public Product(int productId, String productName, int originalPrice, boolean sale, int salePrice, String productHighlights, String productDescription, int trademarkId, boolean status, int quantity, int guarantee, int categoryId, Date updateDate, int sole, int avrRatedStar) {
+        this.productId = productId;
+        this.productName = productName;
+        this.originalPrice = originalPrice;
+        this.sale = sale;
+        this.salePrice = salePrice;
+        this.productHighlights = productHighlights;
+        this.productDescription = productDescription;
+        this.trademarkId = trademarkId;
+        this.status = status;
+        this.quantity = quantity;
+        this.guarantee = guarantee;
+        this.categoryId = categoryId;
+        this.updateDate = updateDate;
+        this.sole = sole;
+        this.avrRatedStar = avrRatedStar;
+       
+    }
 
     public int getProductId() {
         return productId;
