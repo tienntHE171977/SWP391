@@ -17,11 +17,12 @@ public class Account {
     private String phoneNumber;
     private String address;
     private int roleID;
+    private String Username;
 
     public Account() {
     }
 
-    public Account(int UserId, String firstName, String lastName, String email, String password, String phoneNumber, String address, int roleID) {
+    public Account(int UserId, String firstName, String lastName, String email, String password, String phoneNumber, String address, int roleID, String Username) {
         this.UserId = UserId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,9 +31,8 @@ public class Account {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.roleID = roleID;
+        this.Username = Username;
     }
-
-  
 
     public int getUserId() {
         return UserId;
@@ -97,5 +97,15 @@ public class Account {
     public void setRoleID(int roleID) {
         this.roleID = roleID;
     }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
+    }
     
+
+   
 }

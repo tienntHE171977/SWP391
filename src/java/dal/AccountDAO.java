@@ -21,7 +21,7 @@ public class AccountDAO extends DBContext {
     public Account getAccountByUserAndPass(String user, String password) {
 
         String query = "select * from Users\n"
-                + "  where email = ? and password = ?";
+                + "  where Username = ? and Password = ?";
 
         try {
             ps = connection.prepareStatement(query);
@@ -34,7 +34,7 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 Account account = new Account(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getInt(8));
+                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
 
                 return account;
             }
@@ -58,8 +58,9 @@ public class AccountDAO extends DBContext {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Account(rs.getInt(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
+                return new Account(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
             }
 
         } catch (SQLException exception) {
@@ -80,8 +81,9 @@ public class AccountDAO extends DBContext {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Account(rs.getInt(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
+                return new Account(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
             }
 
         } catch (SQLException exception) {
@@ -104,8 +106,9 @@ public class AccountDAO extends DBContext {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8));
+                account = new Account(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
             }
         } catch (SQLException sqle) {
             System.out.println(sqle);
@@ -115,7 +118,7 @@ public class AccountDAO extends DBContext {
     }
 
     public void insertNewAccount(String firstName, String lastName, String email,
-            String password, String phone, String address, int roleId,String username) {
+            String password, String phone, String address, int roleId, String username) {
         String query = "INSERT INTO [dbo].[Users]\n"
                 + "           ([FirstName]\n"
                 + "           ,[LastName]\n"
@@ -136,7 +139,7 @@ public class AccountDAO extends DBContext {
             ps.setString(4, password);
             ps.setString(5, phone);
             ps.setString(6, address);
-            
+
             ps.setInt(7, roleId);
             ps.setString(8, username);
             ps.executeUpdate();
@@ -144,7 +147,8 @@ public class AccountDAO extends DBContext {
             System.out.println(exception);
         }
     }
-       public void UpdatePassAccount(Account acc, String newPass) {
+
+    public void UpdatePassAccount(Account acc, String newPass) {
         int userID = acc.getUserId();
 
         String query = "UPDATE [dbo].[Users]\n"
@@ -160,6 +164,35 @@ public class AccountDAO extends DBContext {
             System.out.println(exception);
         }
     }
+
+    public void updateAccount(int userId, String fName, String lName,
+            String email, String phone, String address, String Username) {
+
+        String query = "UPDATE [dbo].[Users]\n"
+                + "   SET [FirstName] = ?\n"
+                + "      ,[LastName] = ?\n"
+                + "      ,[Email] = ?\n"
+                + "      ,[PhoneNumber] = ?\n"
+                + "      ,[Address] = ?\n"
+                + " WHERE UserID =?";
+
+        try {
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1, fName);
+            ps.setString(2, lName);
+            ps.setString(3, email);
+            ps.setString(4, phone);
+            ps.setString(5, address);
+
+            ps.setInt(6, userId);
+
+            ps.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+    }
+
     public static void main(String[] args) {
         AccountDAO ad = new AccountDAO();
         ad.insertNewAccount("Tien", "manh", "truongk3703", "12345678", "0397139645", "ha noi", 2, "manh123");

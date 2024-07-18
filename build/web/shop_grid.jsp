@@ -138,9 +138,24 @@
                                 <div class="sinlge-bar">
                                     <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                 </div>
-                                <div class="sinlge-bar">
-                                    <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                                </div>
+
+                                <div class="dropdown" id="userDropdownWrapper">
+                        <div class="single-icon" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-circle-o"></i>
+                            <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                        </div>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown" id="userDropdownMenu">
+                            <!-- Dropdown content goes here -->
+                            <a class="dropdown-item" href="profile">Profile</a>
+                            <a class="dropdown-item" href="changePass">Change Password</a>
+                            <a class="dropdown-item" href="myOrder?userID=">My Order</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="logout">Logout</a>
+                        </div>
+                    </div>
+
+
+
                                 <div class="sinlge-bar shopping">
                                     <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
                                     <!-- Shopping Item -->
@@ -156,12 +171,7 @@
                                                 <h4><a href="#">Woman Ring</a></h4>
                                                 <p class="quantity">1x - <span class="amount">$99.00</span></p>
                                             </li>
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Necklace</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                            </li>
+
                                         </ul>
                                         <div class="bottom">
                                             <div class="total">
@@ -284,20 +294,20 @@
                                 <!-- End Single Post -->
 
                                 <!-- Single Post -->
-                                
+
                                 <!-- End Single Post -->
                             </div>
                             <!--/ End Single Widget -->
                             <!-- Single Widget -->
                             <div class="single-widget category">
                                 <h3 class="title">New Products</h3>
-                                    <ul class="categor-list">
-                                        <c:forEach items="${trademarks}" var="tra">
-                                            <li><a href="shopgrid?trademarkId=${tra.trademarkId}">${tra.trademarkName}</a></li>
-                                            </c:forEach>
+                                <ul class="categor-list">
+                                    <c:forEach items="${trademarks}" var="tra">
+                                        <li><a href="shopgrid?trademarkId=${tra.trademarkId}">${tra.trademarkName}</a></li>
+                                        </c:forEach>
 
 
-                                    </ul>
+                                </ul>
                             </div>
                             <!--/ End Single Widget -->
                         </div>

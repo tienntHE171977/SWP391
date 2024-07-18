@@ -324,7 +324,10 @@ public List<Product> getProductsByCategoryId(int categoryId, int page, int pageS
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new Product(rs.getInt(1), rs.getString(15), rs.getInt(2), rs.getBoolean(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getDate(12), rs.getInt(13), rs.getInt(14)));
+                int productId = rs.getInt("product_id");
+                 ProductImageDAO imageDAO = new ProductImageDAO();
+                List<String> images = imageDAO.getImagesByProductId(productId);
+                list.add(new Product(rs.getInt(1), rs.getString(15), rs.getInt(2), rs.getBoolean(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getBoolean(8), rs.getInt(9), rs.getInt(10), rs.getInt(11), rs.getDate(12), rs.getInt(13), rs.getInt(14),images));
             }
 
         } catch (SQLException exception) {

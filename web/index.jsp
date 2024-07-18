@@ -88,7 +88,7 @@
                             <div class="right-content">
                                 <ul class="list-main">
                                     <li><i class="ti-location-pin"></i> Store location</li>
-                                    
+
                                     <li><i class="ti-user"></i> <a href="#">My account</a></li>
                                     <li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
                                 </ul>
@@ -126,7 +126,7 @@
                         <div class="col-lg-8 col-md-7 col-12">
                             <div class="search-bar-top">
                                 <div class="search-bar"><!-- Sreach -->
-                        
+
                                     <form>
                                         <input name="search" placeholder="Search Products Here....." type="search">
                                         <button class="btnn"><i class="ti-search"></i></button>
@@ -140,8 +140,13 @@
                                 <div class="sinlge-bar">
                                     <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                 </div>
-                                <div class="sinlge-bar">
+                                <div class="single-bar">
                                     <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                                    <div class="dropdown-content">
+                                        <a href="#profile">Profile</a>
+                                        <a href="#settings">Settings</a>
+                                        <a href="#logout">Logout</a>
+                                    </div>
                                 </div>
                                 <div class="sinlge-bar shopping">
                                     <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
