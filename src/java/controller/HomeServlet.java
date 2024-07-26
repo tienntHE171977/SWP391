@@ -64,19 +64,35 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CategoryDAO caDAO = new CategoryDAO();
-        List<Category> listC = caDAO.getAllCategory();
-        
-        
-        
-        
-        
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("categories", listC);
-        
-        
-        
+      CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> listC = categoryDAO.getAllCategory();
+        request.setAttribute("listC", listC);
+
+        TrademarkDAO trademarkDAO = new TrademarkDAO();
+        List<Trademark> listTr = trademarkDAO.getAllTrademark();
+        request.setAttribute("listTr", listTr);
+
+        ProductDAO productDAO = new ProductDAO();
+        Product bestSellingProduct = productDAO.getBestSellingProduct();
+        List<Product> appleProducts = productDAO.getProductsByTrademark(1);
+
+        List<Product> latestProducts = productDAO.getLatestProducts(8);
+        List<Product> topRatedProducts = productDAO.getTopRatedProducts();
+        request.setAttribute("topRatedProducts", topRatedProducts);
+
+        List<Product> saleProducts = productDAO.getSaleProducts(3); // Lấy 3 sản phẩm giảm giá
+        request.setAttribute("saleProducts", saleProducts);
+
+        List<Product> saller = productDAO.getBestSellerProducts(3);
+        request.setAttribute("saller", saller);
+
+        List<Product> topRated = productDAO.getTopRatedProducts(3); // Lấy 3 sản phẩm đánh giá cao nhất
+        request.setAttribute("topRated", topRated);
+
+        request.setAttribute("latestProducts", latestProducts);
+        request.setAttribute("appleProducts", appleProducts);
+        request.setAttribute("bestSellingProduct", bestSellingProduct);
+
         request.getRequestDispatcher("index.jsp").forward(request, response);
     } 
 

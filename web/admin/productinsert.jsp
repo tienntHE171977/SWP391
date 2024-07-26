@@ -158,7 +158,7 @@
             <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
                                                 alt="User Image">
                 <div>
-                    <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
+                    <p class="app-sidebar__user-name"><b>${acc.username}</b></p>
                     <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
                 </div>
             </div>
@@ -190,61 +190,77 @@
                             <div class="row element-button">
                                 <div class="col-sm-2">
                                     <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#adddanhmuc"><i
-                                            class="fas fa-folder-plus"></i> Thêm danh mục</a>
+                                            class="fas fa-folder-plus"></i> Insert Product</a>
                                 </div>
                             </div>
 
                             <form class="row" action="productmanager?action=insertproduct" method="POST" enctype="multipart/form-data">
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">Mã sản phẩm </label>
-                                    <input class="form-control" name="product_id" type="text" placeholder="">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="exampleSelect1" class="control-label">Danh mục</label>
-                                    <select name="category_id" class="form-control" id="exampleSelect1">
-                                        <option>-- Chọn danh mục --</option>
-                                        <c:forEach items="${CategoryData}" var="cat">
-                                            <option value="${cat.category_id}">${cat.category_name}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">Tên sản phẩm</label>
-                                    <input class="form-control" name="product_name" type="text">
-                                </div>
-                                <div class="form-group  col-md-3">
-                                    <label class="control-label">Giá bán</label>
-                                    <input class="form-control" name="price" type="number">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">Size</label>
-                                    <input class="form-control" name="size" type="text" placeholder="S,L,XL,...">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">Màu</label>
-                                    <input class="form-control" placeholder="Blue,Gray,..." name="color" type="text">
-                                </div>
-                                <div class="form-group  col-md-3">
-                                    <label class="control-label">Số lượng</label>
-                                    <input class="form-control" name="quantity" type="number">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Ảnh sản phẩm</label>
-                                    <div id="myfileupload">
-                                        <input type="file" id="uploadfile" name="product_img" onchange="readURL(this);" />
-                                    </div>
-                                    <div id="thumbbox">
-                                        <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />
-                                        <a class="removeimg" href="javascript:"></a>
-                                    </div>
-                                    <div id="boxchoice">
-                                        <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i> Chọn ảnh</a>
-                                        <p style="clear:both"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Mô tả sản phẩm</label>
-                                    <textarea class="form-control" name="describe" id="describe"></textarea>
+                                <div class="form-group col-md-6">
+                                                                <label for="exampleSelect1" class="control-label">Category</label>
+                                                                <select name="category_id" class="form-control" id="exampleSelect1">
+                                                                    <option>-- Select Category --</option>
+                                                                   
+                                                                    <c:forEach items="${listC}" var="c">
+                                                                        <option value="${c.categoryId}">${c.categoryName}</option>
+                                                                    </c:forEach>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="control-label">Product Name</label>
+                                                                <input  class="form-control" type="text" name="product_name" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="control-label">Original Price</label>
+                                                                <input  class="form-control" type="number" name="originalprice" required>
+                                                            </div>
+                                                             <div class="form-group col-md-6">
+                                                                <label class="control-label">Sale Price</label>
+                                                                <input  class="form-control" type="number" name="saleprice" required>
+                                                            </div>
+                                                              <div class="form-group col-md-6">
+                                                                <label for="exampleSelect1" class="control-label">Trademark</label>
+                                                                <select name="trademark_id" class="form-control" id="exampleSelect1">
+                                                                    <option>-- Select Trademark --</option>
+                                                                   
+                                                                    <c:forEach items="${listT}" var="c">
+                                                                        <option value="${c.trademarkId}">${c.trademarkName}</option>
+                                                                    </c:forEach>
+                                                                    
+                                                                </select>
+                                                            </div>
+
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label">Quantity</label>
+                                                                        <input  class="form-control" name="quantity" type="text">
+                                                                    </div>
+
+                                                                    <div class="form-group col-md-6">
+                                                                        <label class="control-label">Description</label>
+                                                                        <input  class="form-control" type="text" name="product_describe">
+                                                            </div>
+
+                                                            <div class="form-group col-md-6">
+                                                                <label class="control-label">highlights</label>
+                                                                <input value=" class="form-control" type="text" name="highlights">
+                                                            </div>
+                                                            <!--anh san pham-->
+                                                            <div class="form-group col-md-12">
+                                                                <label class="control-label">Product Image</label>
+                                                                <div id="myfileupload">
+                                                                    <input type="file" id="uploadfile" name="product_img" onchange="readURL(this);" />
+                                                                </div>
+                                                                <div id="thumbbox">
+                                                                    <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />
+                                                                    <a class="removeimg" href="javascript:"></a>
+                                                                </div>
+                                                                <div id="boxchoice">
+                                                                    <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i> Select Image</a>
+                                                                    <p style="clear:both"></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <BR>
                                 </div>
                                 <button class="btn btn-save" type="submit">Lưu lại</button>
                                 &nbsp;

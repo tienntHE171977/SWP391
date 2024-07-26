@@ -140,7 +140,7 @@
                                 </div>
 
                                 <div class="dropdown" id="userDropdownWrapper">
-                        <div class="single-icon" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="single-bar" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user-circle-o"></i>
                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                         </div>
@@ -148,7 +148,7 @@
                             <!-- Dropdown content goes here -->
                             <a class="dropdown-item" href="profile">Profile</a>
                             <a class="dropdown-item" href="changePass">Change Password</a>
-                            <a class="dropdown-item" href="myOrder?userID=">My Order</a>
+                            <a class="dropdown-item" href="myOrder?userID=${acc.userId}">My Order</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="logout">Logout</a>
                         </div>
@@ -161,25 +161,50 @@
                                     <!-- Shopping Item -->
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
-                                            <span>2 Items</span>
+                                            <span>ShopItem</span>
                                             <a href="#">View Cart</a>
                                         </div>
+                                        <c:forEach items="${cart.items}" var="item">
                                         <ul class="shopping-list">
+                                            
                                             <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Ring</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                            </li>
+                                                <a class="cart-img" href="#"><img src="${item.product.images[0]}" alt="#"></a>
+                                                <h4><a href="#">${item.product.productName}</a></h4>
+                                                <p class="quantity">${item.quantity} x <span class="amount">${item.product.originalPrice}</span></p>
 
+                                                <form action="process?service=delete" method="post">
+                                                    <input type="hidden" name="id" value="${item.product.productId}"/>
+                                                    <input type="submit" value="X"/>
+
+                                                </form>
+
+                                            </li>
+                                            
                                         </ul>
+                                            </c:forEach>
+                                        
+                                       
                                         <div class="bottom">
+                                            <%-- Initialize the totalPayment variable --%>
+                                            <c:set var="totalPayment" value="0" />
+
+                                            <%-- Loop through cart items to calculate total payment --%>
+                                            <c:forEach items="${cart.items}" var="item">                             
+                                                <%-- Calculate total amount for each item --%>
+                                                <c:set var="itemTotal" value="${item.product.originalPrice * item.quantity}" />
+
+                                                <%-- Update the total payment --%>
+                                                <c:set var="totalPayment" value="${totalPayment + itemTotal}" />
+                                                 
+                                            </c:forEach>
+                                            
                                             <div class="total">
                                                 <span>Total</span>
-                                                <span class="total-amount">$134.00</span>
+                                                <span class="total-amount">$${totalPayment}</span>
                                             </div>
-                                            <a href="checkout.html" class="btn animate">Checkout</a>
+                                            <a href="checkout.jsp" class="btn animate">Checkout</a>
                                         </div>
+                                          
                                     </div>
                                     <!--/ End Shopping Item -->
                                 </div>
@@ -351,7 +376,9 @@
                                                     <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                                 </div>
                                                 <div class="product-action-2">
-                                                    <a title="Add to cart" href="#">Add to cart</a>
+                                                    <form name="f" action="buy?id=${product.productId}" method="post">
+                                                        <input type="submit" value="Add to Cart" />
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

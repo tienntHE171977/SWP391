@@ -7,6 +7,8 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 
 /**
@@ -18,6 +20,52 @@ public class AccountDAO extends DBContext {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    public List<Account> getAllAccount() {
+        List<Account> list = new ArrayList<>();
+        String query = "select * from Users";
+
+        try {
+            ps = connection.prepareStatement(query);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Account account = new Account(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
+                list.add(account);
+
+            }
+            return list;
+
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+
+        return null;
+    }
+  public Account getAccountByOrderDetailId(int orderDetailId) {
+        String query = "  select Users.* from Order\n"
+                + "  join Users on Order.userId = Users.UserID\n"
+                + "  where order_id= ?";
+
+        try {
+            ps = connection.prepareStatement(query);
+
+            ps.setInt(1, orderDetailId);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Account a = new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
+            }
+
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+
+        return null;
+    }
     public Account getAccountByUserAndPass(String user, String password) {
 
         String query = "select * from Users\n"
@@ -34,7 +82,7 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 Account account = new Account(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
+                        rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
 
                 return account;
             }
@@ -60,7 +108,7 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 return new Account(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
+                        rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
             }
 
         } catch (SQLException exception) {
@@ -83,7 +131,7 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 return new Account(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
+                        rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
             }
 
         } catch (SQLException exception) {
@@ -92,6 +140,7 @@ public class AccountDAO extends DBContext {
 
         return null;
     }
+    
 
     public boolean checkUserDupplicate(String userName) {
 
@@ -108,7 +157,7 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 account = new Account(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getInt(8),rs.getString(9));
+                        rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
             }
         } catch (SQLException sqle) {
             System.out.println(sqle);
@@ -165,6 +214,62 @@ public class AccountDAO extends DBContext {
         }
     }
 
+    public void UpdateAccount(String fname, String lname, String address, int role,int userId) {
+
+        String query = "UPDATE [dbo].[Users]\n"
+                + "   SET [FirstName] = ?\n"
+                + "      ,[LastName] = ?\n"
+                + "      ,[Address] = ?\n"
+                + "      ,[roleid] = ?\n"
+                + " WHERE UserID = ?";
+
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, fname);
+            ps.setString(2, lname);
+            ps.setString(3, address);
+            ps.setInt(4, role);
+            ps.setInt(5, userId);
+            ps.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+    }
+  public void UpdateRoleAccount( int role,int userId) {
+
+        String query = "UPDATE [dbo].[Users]\n"
+
+                + "     SET [roleid] = ?\n"
+                + " WHERE UserID = ?";
+
+        try {
+            ps = connection.prepareStatement(query);
+       
+            ps.setInt(1, role);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+    }
+    public int countAccount() {
+        int count = 0;
+
+        String query = "SELECT COUNT(UserID) from Users";
+
+        try {
+            ps = connection.prepareStatement(query);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception);
+        }
+        return count;
+    }
+
     public void updateAccount(int userId, String fName, String lName,
             String email, String phone, String address, String Username) {
 
@@ -195,7 +300,8 @@ public class AccountDAO extends DBContext {
 
     public static void main(String[] args) {
         AccountDAO ad = new AccountDAO();
-        ad.insertNewAccount("Tien", "manh", "truongk3703", "12345678", "0397139645", "ha noi", 2, "manh123");
+        List<Account> list = ad.getAllAccount();
+        System.out.println(list.get(0).getFirstName());
     }
     //
 }

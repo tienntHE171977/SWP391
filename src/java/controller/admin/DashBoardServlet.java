@@ -5,6 +5,10 @@
 
 package controller.admin;
 
+import dal.AccountDAO;
+import dal.OrderCartDao;
+import dal.OrderDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +16,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import model.Order;
+import model.OrderCart;
 
 /**
  *
@@ -55,6 +64,25 @@ public class DashBoardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        OrderDAO od = new OrderDAO();
+        AccountDAO ad = new AccountDAO();
+        ProductDAO pd = new ProductDAO();
+        int countAcc = ad.countAccount();
+        int countP = pd.getTotalProduct();
+        int countPLow = pd.countProductLow();
+        int countO = od.getCountOrderDetail();
+       
+        Date d = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = simpleDateFormat.format(d);
+        List<Order> listCart = od.getOrderDByDate(date);
+        
+        
+        request.setAttribute("countAcc", countAcc);
+        request.setAttribute("listCart", listCart);
+        request.setAttribute("countO", countO);
+        request.setAttribute("countP", countP );
+        request.setAttribute("countPLow", countPLow );
 request.getRequestDispatcher("admin/index.jsp").forward(request, response);    } 
 
     /** 

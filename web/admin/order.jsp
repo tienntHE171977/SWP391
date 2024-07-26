@@ -85,32 +85,77 @@
                                 </div>
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
-                                <thead>
+                            <c:if test="${listOrderCart.size() == 0}">
+                            <h3><strong class="exit">NO ORDER EXITS</strong></h3>
+                        </c:if>
+
+                        <c:if test="${listOrderCart.size() != 0}">
+                            <thead>
+                                <tr>
+
+
+                                    <th>STT</th>
+                                    <th>Name</th>
+                                    <th>LocationOrder</th>
+                                    <th>Total</th>
+
+                                    <th>Status</th>
+                                    <th>Comment</th>
+                                    <th>Detail Order</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:set var = "stt" value = "${1}"/>
+                                <c:forEach items="${listOrderCart}" var="i">
                                     <tr>
-                                        <th>ID đơn hàng</th>
-                                        <th>Khách hàng</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Ngày mua</th>
-                                        <th>Tổng tiền</th>
-                                        <th>Thanh Toán</th>
-                                        <th>Tính năng</th>
+
+                                        <td>${stt}</td>
+                                        <c:set var = "stt" value = "${stt+1}"/>
+                                        <td>${i.nameUser}</td>
+                                        <td>${i.locationOrder}</td>
+                                        <td>${i.total}</td>
+                                        <td>
+                                            <c:if test="${i.status == 2}">
+                                                Approved
+                                            </c:if>
+
+                                            <c:if test="${i.status == 0}">
+                                                Reject
+                                            </c:if>
+
+                                            <c:if test="${i.status == 1}">
+
+                                                <button onclick="chanageStatus(this,${i.userID}, ${i.orderDeitalID}, 2)">Approved</button>
+                                                <button onclick="chanageStatus(this,${i.userID}, ${i.orderDeitalID}, 0)">Reject</button>
+
+                                            </c:if> 
+                                        </td>
+                                        <td>
+                                            <c:if test="${i.comment == null || i.comment == ''}">
+                                                NO COMMENT
+                                            </c:if>
+                                            <c:if test="${i.comment != null && i.comment != ''}">
+                                                <p>${i.comment}</p>
+                                            </c:if>
+                                        </td>
+                                        <td><a href="detailBill?orderDetailID=${i.orderDeitalID}" class="view">View</a></td>
+                                        <td>
+                                            <a href="#editEmployeeModal" 
+                                               onclick="editOrder('${i.orderDeitalID}', '${i.nameUser}', '${i.locationOrder}', '${i.total}', '${i.comment}')" class="edit"
+                                               data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
+                                                                   title="Edit">&#xE254;</i></a>
+
+<!--                                            <a href="#deleteEmployeeModal" onclick="deleteOrder(${i.orderDeitalID})" class="delete"
+                                               data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
+                                                                   title="Delete">&#xE872;</i></a>-->
+                                        </td>
+
+
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${bill}" var="b">
-                                        <tr>
-                                            <td>${b.bill_id}</td>
-                                            <td>${b.user.user_name}</td>
-                                            <td>(+84)${b.phone}</td>
-                                            <td>${b.address}</td>
-                                            <td>${b.date}</td>
-                                            <td>${b.total}</td>
-                                            <td><span class="badge bg-success">${b.payment}</span></td>                                  
-                                            <td><a style=" color: rgb(245 157 57);background-color: rgb(251 226 197); padding: 5px;border-radius: 5px;" href="ordermanager?action=showdetail&bill_id=${b.bill_id}"><i class="fa"></i>Chi tiết đơn hàng</a></td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
+                                </c:forEach>
+                            </tbody>
+                             </c:if>
                             </table>
                         </div>
                     </div>
@@ -183,6 +228,50 @@
                 }
             }
         </script>
+        <script>
+        function editOrder(orderDeitalID, name, location, total, comment) {
+
+            document.getElementById('orderID').value = orderDeitalID;
+
+            document.getElementById('name').value = name;
+
+            document.getElementById('location').value = location;
+
+            document.getElementById('total').value = total;
+
+            document.getElementById('comment').value = comment;
+        }
+
+        function deleteOrder(orderDeitalID) {
+            document.getElementById('orderDetailID').value = orderDeitalID;
+
+        }
+        
+       
+        
+        function chanageStatus(btn,userName, eid, s) {
+            var text = btn.textContent;//get text cua button(chu trong btn)
+            btn.parentElement.innerHTML = text;//cho td = text cua minh la duoc
+            //su ajax toi con servlet change
+            $.ajax({
+                url: '/myProject_2/orderManagement?action=changeSatus',
+                type: 'POST',
+                data: {//truyen id va status
+                    orderDetailID: eid,
+                    status: s,
+                    userName : userName
+                },
+
+                success: function (response) {
+                    //do something
+                    alert('update status sucessfully');
+                }
+
+            });
+
+        }
+
+    </script>
     </body>
 
 </html>

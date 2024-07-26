@@ -85,7 +85,7 @@
 
                                 <!-- Update button -->
                                 <div class="text-center">
-                                    <a class="btn btn-update" href="homePage">back</a>
+                                    <a class="btn btn-update" href="home">back</a>
                                     <button type="submit" class="btn btn-info">Update</button>  
                                 </div>
 

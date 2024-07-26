@@ -5,6 +5,8 @@
 
 package controller.admin;
 
+import dal.AccountDAO;
+import dal.RoleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Account;
+import model.Role;
 
 /**
  *
@@ -55,6 +60,12 @@ public class CustomerManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        AccountDAO ad = new AccountDAO();
+        RoleDAO rd = new RoleDAO();
+        List<Account> listA = ad.getAllAccount();
+        List<Role> listR = rd.getAllAccount();
+        request.setAttribute("listAcc", listA);
+        request.setAttribute("listR", listR);
         request.getRequestDispatcher("admin/customer.jsp").forward(request, response);
     } 
 
@@ -68,7 +79,26 @@ public class CustomerManagerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        AccountDAO ad = new AccountDAO();
+        String action = request.getParameter("action");
+          int userId = Integer.parseInt(request.getParameter("user_id"));
+                String fname = request.getParameter("fname");
+                String lname = request.getParameter("lname");
+                String email = request.getParameter("email");
+                String phone = request.getParameter("phone");
+                String address = request.getParameter("address");
+                String username = request.getParameter("username");
+                String role_raw = request.getParameter("role");
+                int role = Integer.parseInt(role_raw);
+        switch (action) {
+            case "update":
+              
+                ad.UpdateAccount(fname, lname, address, role, userId);
+                break;
+            case "updaterole":
+                 ad.UpdateRoleAccount(role, userId);
+                break;
+        }
     }
 
     /** 

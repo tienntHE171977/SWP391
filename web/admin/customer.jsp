@@ -110,34 +110,47 @@
                                    id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>ID khách hàng</th>
-                                        <th>Tên khách hàng</th>
+                                        <th>User ID</th>
+                                        <th>Username</th>
+                                        <th>Full Name</th>
+                                        
                                         <th>Email</th>
-                                        <th>isAdmin</th>
-                                        <th width="70">Tính năng</th>
+<!--                                        <th>Password</th>-->
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Role</th>
+                                        <th width="70">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${listAcc}" var="acc">
                                         <tr>
-                                            <td>${acc.accountID}</td>
-                                            <td>${acc.fname} ${acc.lname}</td>
+                                            <td>${acc.userId}</td>
+                                            <td>${acc.username}</td>
+                                            <td>${acc.firstName} ${acc.lastName}</td>
+                                           
                                             <td>${acc.email}</td>
+<!--                                            <td>${acc.password}</td>-->
+                                            <td>${acc.phoneNumber}</td>
+                                            <td>${acc.address}</td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${acc.roleID == 1}">
-                                                        isAdmin
+                                                        Admin
                                                     </c:when>
                                                         <c:when test="${acc.roleID == 2}">
                                                         Customer
                                                     </c:when>
                                                     <c:otherwise>
-                                                        Staff
+                                                        Manager
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
                                             <td><button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                        data-target="#ModalUP${acc.accountID}"><i class="fas fa-edit"></i></button></td>
+                                                        data-target="#ModalUP${acc.userId}"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-primary btn-sm edit" type="button" title="Band" id="show-emp" data-toggle="modal"
+                                                        data-target="#ModalUP1${acc.userId}"><i class="fas fa-remove"></i></button></td>
+                                                       
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -148,8 +161,50 @@
                 </div>
             </div>
         </main>
+                            <c:forEach items="${listAcc}" var="acc">           
+            <div class="modal fade" id="ModalUP1${acc.userId}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+                 data-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form method="POST" action="customermanager?action=updaterole">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group  col-md-12">
+                                        <span class="thong-tin-thanh-toan">
+                                            <h5>Band Account</h5>
+                                           
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleSelect1" class="control-label">Role Account</label>
+                                        <input hidden name="user_id" value="${acc.userId}">
+                                        <select name="role" class="form-control" id="exampleSelect1">
+                                             <option value="0">Band</option>
+                                            <c:forEach items="${listR}" var="r">
+                                               
+                                                <option value="${r.roleId}">${r.roleName}</option>
+                                           
+                                            </c:forEach>
+                                        </select>
+                                     
+                                    </div>
+                                </div>
+                                <BR>
+                                <button class="btn btn-save" type="submit">Lưu lại</button>
+                                <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                                <BR>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
         <c:forEach items="${listAcc}" var="acc">           
-            <div class="modal fade" id="ModalUP${acc.accountID}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+            <div class="modal fade" id="ModalUP${acc.userId}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
                  data-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -166,27 +221,28 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label for="exampleSelect1" class="control-label">Quyền quản trị</label>
-                                        <input hidden name="user_id" value="${acc.accountID}">
+                                        <input hidden name="user_id" value="${acc.userId}">
                                         <select name="role" class="form-control" id="exampleSelect1">
                                             <c:forEach items="${listR}" var="r">
-                                                <option value="${r.roleID}">${r.roleName}</option>
+                                                <option value="${r.roleId}">${r.roleName}</option>
                                            
                                             </c:forEach>
                                         </select>
                                         <label for="exampleSelect1" class="control-label">First Name</label>
-                                        <input name="fname" >
+                                        <input name="username" value="${acc.username}" >
+                                        <label for="exampleSelect1" class="control-label">First Name</label>
+                                        <input name="fname" value="${acc.firstName}" >
                                          <label for="exampleSelect1" class="control-label">Last Name</label>
-                                        <input name="lname" > <br/>
-                                        <label for="exampleSelect1" class="control-label">Dob</label>
-                                        <input name="dob" type="date"> <br/>
+                                         <input name="lname" value="${acc.lastName}" > <br/>
+                                      <label for="exampleSelect1" class="control-label">Email</label>
+                                      <input name="email" value="${acc.email}" >
                                         <label for="exampleSelect1" class="control-label">Phone</label>
-                                        <input name="phone" > <br/>
-                                        <label for="exampleSelect1" class="control-label">Email</label>
-                                        <input name="email" >
+                                        <input name="phone" value="${acc.phoneNumber}" > <br/>
+                                       
                                         <label for="exampleSelect1" class="control-label">Password</label>
-                                        <input name="password" >
-                                        <label for="exampleSelect1" class="control-label">Status</label>
-                                        <input name="status" >
+                                        <input name="password" value="${acc.password}">
+                                        <label for="exampleSelect1" class="control-label">Address</label>
+                                        <input name="address" value="${acc.address}" >
                                     </div>
                                 </div>
                                 <BR>

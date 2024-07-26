@@ -64,6 +64,10 @@
                 </li>
                 <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span
                             class="app-menu__label">Quản lý đơn hàng</span></a></li>
+                            <li><a class="app-menu__item" href="catgorymanager"><i class='app-menu__icon bx bx-task'></i><span
+                            class="app-menu__label">Manage Catgory</span></a></li>
+                            <li><a class="app-menu__item" href="trademarkmanager"><i class='app-menu__icon bx bx-task'></i><span
+                            class="app-menu__label">Manage Trademark</span></a></li>
                 <li><a class="app-menu__item" href="https://docs.google.com/spreadsheets/d/1elWy0LYj9ngbmywMGwy8Noe_K7WmyisQ6aHOK6RnXZI" target="_blank"><i class='app-menu__icon bx bx-task'></i><span
                             class="app-menu__label">Kiểm tra phản hồi</span></a></li>
             </ul>
@@ -87,7 +91,7 @@
                             <div class="widget-small primary coloured-icon"><i class='icon bx bxs-user-account fa-3x'></i>
                                 <div class="info">
                                     <h4>Tổng khách hàng</h4>
-                                    <p><b>${requestScope.user} khách hàng</b></p>
+                                    <p><b>${countAcc} khách hàng</b></p>
                                     <p class="info-tong">Tổng số khách hàng được quản lý.</p>
                                 </div>
                             </div>
@@ -97,7 +101,7 @@
                             <div class="widget-small info coloured-icon"><i class='icon bx bxs-data fa-3x'></i>
                                 <div class="info">
                                     <h4>Tổng sản phẩm</h4>
-                                    <p><b>${requestScope.product} sản phẩm</b></p>
+                                    <p><b>${countP} sản phẩm</b></p>
                                     <p class="info-tong">Tổng số sản phẩm được quản lý.</p>
                                 </div>
                             </div>
@@ -107,7 +111,7 @@
                             <div class="widget-small warning coloured-icon"><i class='icon bx bxs-shopping-bags fa-3x'></i>
                                 <div class="info">
                                     <h4>Tổng đơn hàng</h4>
-                                    <p><b>${requestScope.bill} đơn hàng</b></p>
+                                    <p><b>${countO} đơn hàng</b></p>
                                     <p class="info-tong">Tổng số hóa đơn bán hàng trong tháng.</p>
                                 </div>
                             </div>
@@ -117,7 +121,7 @@
                             <div class="widget-small danger coloured-icon"><i class='icon bx bxs-error-alt fa-3x'></i>
                                 <div class="info">
                                     <h4>Sắp hết hàng</h4>
-                                    <p><b>${requestScope.low} sản phẩm</b></p>
+                                    <p><b>${countPLow} sản phẩm</b></p>
                                     <p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
                                 </div>
                             </div>
@@ -130,27 +134,28 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>ID đơn hàng</th>
-                                                <th>Khách hàng</th>
-                                                <th>Số điện thoại</th>
-                                                <th>Địa chỉ</th>
+                                                <th>Order ID</th>
+                                                <th>Customer</th>
+                                                <th>Phone Number</th>
+                                                <th>Address</th>
                                                 <th>Ngày mua</th>
-                                                <th>Tổng tiền</th>
+                                                <th>Total</th>
                                                 <th>Thanh Toán</th>
                                                 <th>Chức năng</th>
                                                 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${billbyday}" var="b">
+                                            <c:forEach items="${listCart}" var="c">
                                                 <tr>
-                                                    <td>${b.bill_id}</td>
-                                                    <td>${b.user.user_name}</td>
-                                                    <td>(+84)${b.phone}</td>
-                                                    <td>${b.address}</td>
-                                                    <td>${b.date}</td>
-                                                    <td>${b.total}</td>
-                                                    <td><span class="badge bg-success">${b.payment}</span></td>                                  
+                                                    <td>${c.order_id}</td>
+                                                    <td>${c.fullName}</td>
+                                                    <td>(+84)${c.phone}</td>
+                                                    <td>${c.address}</td>
+                                                    <td>${c.orderDate}</td>
+                                                    <td>${c.total_cost}</td>
+                                                    <td>${c.status_order}</td>
+<!--                                                    <td><span class="badge bg-success">${b.payment}</span></td>                                  -->
                                                     <td><a style=" color: rgb(245 157 57);background-color: rgb(251 226 197); padding: 5px;border-radius: 5px;" href="ordermanager?action=showdetail&bill_id=${b.bill_id}"><i class="fa"></i>Chi tiết đơn hàng</a></td>
                                                 </tr>
                                             </c:forEach>

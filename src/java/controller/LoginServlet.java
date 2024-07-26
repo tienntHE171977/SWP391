@@ -126,9 +126,9 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(p);
             if (account.getRoleID() == 2) {
 
-                response.sendRedirect("homePage");
+                response.sendRedirect("home");
             }else{
-                response.sendRedirect("adminPage");
+                response.sendRedirect("dashboard");
                 
             }
 

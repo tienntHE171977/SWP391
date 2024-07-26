@@ -1,6 +1,6 @@
 <%-- 
-    Document   : product
-    Created on : Oct 19, 2021, 11:23:29 PM
+    Document   : customer
+    Created on : Oct 19, 2021, 11:20:59 PM
     Author     : Khuong Hung
 --%>
 
@@ -10,12 +10,12 @@
 <html lang="en">
 
     <head>
-        <title>Product Manager | Admin dashboard</title>
+        <title>Danh sách nhân viên | Quản trị Admin</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Main CSS-->
-        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="admin/css/main.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -26,7 +26,26 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
+<style>
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .form-group label {
+            flex: 1 1 100px;
+            max-width: 150px;
+        }
+        .form-group input, 
+        .form-group select {
+            flex: 1 1 calc(100% - 160px); /* subtract label width + padding */
+            max-width: calc(100% - 160px);
+        }
+        .form-group input,
+        .form-group select {
+           flex: 1 1 400px; /* Increase the base flex value for larger input fields */
+            max-width: 400px; 
+        }
+    </style>
     </head>
 
     <body onload="time()" class="app sidebar-mini rtl">
@@ -50,90 +69,106 @@
             <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="admin/images/user.png" width="50px"
                                                 alt="User Image">
                 <div>
-                    <p class="app-sidebar__user-name"><b>images/person_5.jpg</b></p>
-                    <p class="app-sidebar__user-designation">Welcome back</p>
+                    <p class="app-sidebar__user-name"><b>${sessionScope.user.user_name}</b></p>
+                    <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
                 </div>
             </div>
             <hr>
             <ul class="app-menu">
                 <li><a class="app-menu__item" href="dashboard"><i class='app-menu__icon bx bx-tachometer'></i><span
-                            class="app-menu__label">Dashboard</span></a></li>
-                <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-user-voice'></i><span
-                            class="app-menu__label">Customer Manager</span></a></li>
-                <li><a class="app-menu__item" href="#"><i
-                            class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Product Manager</span></a>
+                            class="app-menu__label">Bảng điều khiển</span></a></li>
+                <li><a class="app-menu__item" href="customermanager"><i class='app-menu__icon bx bx-user-voice'></i><span
+                            class="app-menu__label">Quản lý khách hàng</span></a></li>
+                <li><a class="app-menu__item" href="productmanager"><i
+                            class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a>
                 </li>
-                <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-task'></i><span
-                            class="app-menu__label">Oder Manager</span></a></li>
+                <li><a class="app-menu__item" href="ordermanager"><i class='app-menu__icon bx bx-task'></i><span
+                            class="app-menu__label">Quản lý đơn hàng</span></a></li>
             </ul>
         </aside>
         <main class="app-content">
             <div class="app-title">
                 <ul class="app-breadcrumb breadcrumb side">
-                    <li class="breadcrumb-item active"><a href="#"><b>Product Manager</b></a></li>
+                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách người dùng</b></a></li>
                 </ul>
                 <div id="clock"></div>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
                         <div class="tile-body">
+
                             <div class="row element-button">
-                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" href="#" title="Thêm"><i class="fas fa-plus"></i>
+                                 <div class="col-sm-2">
+                                     <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/insertproduct" title="Thêm"><i class="fas fa-plus"></i>
                                         Insert a new Product</a>
                                 </div>
                                 <div class="col-sm-2">
                                     <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-                                            class="fas fa-print"></i> Print</a>
+                                            class="fas fa-print"></i> In dữ liệu</a>
                                 </div>
                             </div>
-                            <form action="productmanager?action=updateproduct" method="POST">
-                                <table class="table table-hover table-bordered" id="sampleTable">
+                              
+
+                           <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                         <tr>
                                             <th>Product ID</th>
-                                            <th>Category</th>
                                             <th>Product Name</th>
-                                            <th>Price</th>
-                                            <th>Size</th>
-                                            <th>Color</th>
-                                            <th>Description</th>
+                                            <th>Origin Price</th>
+                                           
+                                            <th>Status</th>
                                             <th>Quantity</th>
+                                            
+                                          
                                             <th>Product Image</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        <c:forEach items="${listP}" var="p">
                                             <tr>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
+                                                <td>${p.productId}</td>
+                                                <td>${p.productName}</td>
+                                                <td>${p.originalPrice}</td>
+                                               
+                                                <td>${p.status}</td>
+                                                <td>${p.quantity}</td>
+                                                
+                                                
+                                                    <td><img width="100px" src="${p.images}" alt="alt"/></td>
+                                               
+                                                
                                                 <td>
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Delete" "><i
                                                             class="fas fa-trash-alt"></i>
                                                     </button>
                                                     <button class="btn btn-primary btn-sm edit" type="button" title="Edit" id="show-emp"
-                                                            data-toggle="modal" data-target="#ModalUP${1}"><i class="fas fa-edit"></i>
+                                                            data-toggle="modal" data-target="#ModalUP${p.productId}"><i class="fas fa-edit"></i>
                                                     </button>
                                                 </td>
                                             </tr>
+                                            </c:forEach>
+                                            
 
-                                            <!--
-                                            MODAL
-                                            -->
+                                        <!--
+                                      MODAL
+                                        -->
+                                    </tbody>
+                                </table>
 
-                                        <div class="modal fade" id="ModalUP${1}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
-                                             data-keyboard="false">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+                            <c:forEach items="${listP}" var="p">           
+            <div class="modal fade" id="ModalUP${p.productId}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+                 data-keyboard="false">
+               <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
+                                                    <form action="productmanager?action=update" method="POST">
                                                     <div class="modal-body">
                                                         <div class="row">
                                                             <div class="form-group  col-md-12">
@@ -145,45 +180,56 @@
                                                         <div class="row">
                                                             <div class="form-group col-md-6">
                                                                 <label class="control-label">Product ID </label>
-                                                                <input class="form-control" type="text" readonly name="product_id" value="${1}">
+                                                                <input class="form-control" type="text" readonly name="product_id" value="${p.productId}">
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label for="exampleSelect1" class="control-label">Category</label>
                                                                 <select name="category_id" class="form-control" id="exampleSelect1">
                                                                     <option>-- Select Category --</option>
                                                                    
-                                                                        <option>Sample</option>
-                                                                        <option>Sample</option>
-                                                                        <option>Sample</option>
+                                                                    <c:forEach items="${listC}" var="c">
+                                                                        <option value="${c.categoryId}">${c.categoryName}</option>
+                                                                    </c:forEach>
                                                                     
                                                                 </select>
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label class="control-label">Product Name</label>
-                                                                <input class="form-control" type="text" name="product_name" required>
+                                                                <input value="${p.productName}" class="form-control" type="text" name="product_name" required>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label class="control-label">Price</label>
-                                                                <input class="form-control" type="number" name="product_price" required>
+                                                                <label class="control-label">Original Price</label>
+                                                                <input value="${p.originalPrice}" class="form-control" type="number" name="originalprice" required>
                                                             </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label class="control-label">Color</label>
-                                                                <input class="form-control" name="product_color" type="text"
-                                                                    </div>
+                                                             <div class="form-group col-md-6">
+                                                                <label class="control-label">Sale Price</label>
+                                                                <input value="${p.salePrice}" class="form-control" type="number" name="saleprice" required>
+                                                            </div>
+                                                              <div class="form-group col-md-6">
+                                                                <label for="exampleSelect1" class="control-label">Trademark</label>
+                                                                <select name="trademark_id" class="form-control" id="exampleSelect1">
+                                                                    <option>-- Select Trademark --</option>
+                                                                   
+                                                                    <c:forEach items="${listT}" var="c">
+                                                                        <option value="${c.trademarkId}">${c.trademarkName}</option>
+                                                                    </c:forEach>
+                                                                    
+                                                                </select>
+                                                            </div>
 
                                                                     <div class="form-group col-md-6">
-                                                                        <label class="control-label">Size</label>
-                                                                        <input class="form-control" name="product_size" type="text">
+                                                                        <label class="control-label">Quantity</label>
+                                                                        <input value="${p.quantity}" class="form-control" name="quantity" type="text">
                                                                     </div>
 
                                                                     <div class="form-group col-md-6">
                                                                         <label class="control-label">Description</label>
-                                                                        <input class="form-control" type="text" name="product_describe">
+                                                                        <input value="${p.productDescription}" class="form-control" type="text" name="product_describe">
                                                             </div>
 
                                                             <div class="form-group col-md-6">
-                                                                <label class="control-label">Quantity</label>
-                                                                <input class="form-control" type="text" name="product_quantity">
+                                                                <label class="control-label">highlights</label>
+                                                                <input value="${p.productHighlights}" class="form-control" type="text" name="highlights">
                                                             </div>
                                                             <!--anh san pham-->
                                                             <div class="form-group col-md-12">
@@ -206,99 +252,91 @@
                                                         <a class="btn btn-cancel" data-dismiss="modal" href="#">Cancel</a>
                                                         <BR>
                                                     </div>
+                                                            </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!--
-                                      MODAL
-                                        -->
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-        </main>
-
-
-
+        </c:forEach>
+       
         <!-- Essential javascripts for application to work-->
-        <script src="./js/jquery-3.2.1.min.js"></script>
-        <script src="./js/popper.min.js"></script>
-        <script src="./js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="./js/main.js"></script>
+        <script src="admin/js/jquery-3.2.1.min.js"></script>
+        <script src="admin/js/popper.min.js"></script>
+        <script src="admin/js/bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="admin/js/main.js"></script>
         <!-- The javascript plugin to display page loading on top-->
-        <script src="./js/plugins/pace.min.js"></script>
+        <script src="admin/js/plugins/pace.min.js"></script>
         <!-- Page specific javascripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
         <!-- Data table plugin-->
-        <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
-        <script type="text/javascript">
-                                                                        $('#sampleTable').DataTable();
-                                                                        //Thời Gian
-                                                                        function time() {
-                                                                            var today = new Date();
-                                                                            var weekday = new Array(7);
-                                                                            weekday[0] = "Sunday";
-                                                                            weekday[1] = "Monday";
-                                                                            weekday[2] = "Tuesday";
-                                                                            weekday[3] = "Wednesday ";
-                                                                            weekday[4] = "Thursday";
-                                                                            weekday[5] = "Friday";
-                                                                            weekday[6] = "Saturday";
-                                                                            var day = weekday[today.getDay()];
-                                                                            var dd = today.getDate();
-                                                                            var mm = today.getMonth() + 1;
-                                                                            var yyyy = today.getFullYear();
-                                                                            var h = today.getHours();
-                                                                            var m = today.getMinutes();
-                                                                            var s = today.getSeconds();
-                                                                            m = checkTime(m);
-                                                                            s = checkTime(s);
-                                                                            nowTime = h + " : " + m + " : " + s ;
-                                                                            if (dd < 10) {
-                                                                                dd = '0' + dd
-                                                                            }
-                                                                            if (mm < 10) {
-                                                                                mm = '0' + mm
-                                                                            }
-                                                                            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                                            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                                    '</span>';
-                                                                            document.getElementById("clock").innerHTML = tmp;
-                                                                            clocktime = setTimeout("time()", "1000", "Javascript");
-
-                                                                            function checkTime(i) {
-                                                                                if (i < 10) {
-                                                                                    i = "0" + i;
-                                                                                }
-                                                                                return i;
-                                                                            }
-                                                                        }
-        </script>
+        <script type="text/javascript" src="admin/js/plugins/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="admin/js/plugins/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript">$('#sampleTable').DataTable();</script>
         <script>
-
-            $(document).ready(jQuery(function () {
+            function deleteRow(r) {
+                var i = r.parentNode.parentNode.rowIndex;
+                document.getElementById("myTable").deleteRow(i);
+            }
+            jQuery(function () {
                 jQuery(".trash").click(function () {
                     swal({
-                        title: "Warning!",
-                        text: "Are you sure you want to delete this product?",
-                        buttons: ["Cancel", "Yes"],
+                        title: "Cảnh báo",
+
+                        text: "Do you want band accout?",
+                        buttons: ["No", "Yes"],
                     })
                             .then((willDelete) => {
                                 if (willDelete) {
-                                    window.location = "productmanager?action=deleteproduct&product_id=" + $(this).attr("value");
-                                    swal("Deleted successfully.!", {
+                                    swal("Đã xóa thành công.!", {
+
                                     });
                                 }
                             });
                 });
-            }));
-        </script>
-        <script>
+            });
+
+            //Thời Gian
+            function time() {
+                var today = new Date();
+                var weekday = new Array(7);
+                weekday[0] = "Chủ Nhật";
+                weekday[1] = "Thứ Hai";
+                weekday[2] = "Thứ Ba";
+                weekday[3] = "Thứ Tư";
+                weekday[4] = "Thứ Năm";
+                weekday[5] = "Thứ Sáu";
+                weekday[6] = "Thứ Bảy";
+                var day = weekday[today.getDay()];
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                        '</span>';
+                document.getElementById("clock").innerHTML = tmp;
+                clocktime = setTimeout("time()", "1000", "Javascript");
+
+                function checkTime(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+            }
+            //In dữ liệu
             var myApp = new function () {
                 this.printTable = function () {
                     var tab = document.getElementById('sampleTable');
@@ -308,6 +346,7 @@
                     win.print();
                 }
             }
+
         </script>
     </body>
 

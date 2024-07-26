@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>FilterAccount</filter-name>
+        <filter-class>filter.FilterAccount</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterAccount</filter-name>
+        <url-pattern>/payment</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FilterAccount</filter-name>
+        <url-pattern>/cart1.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FilterAccount</filter-name>
+        <url-pattern>/profile</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FilterAccount</filter-name>
+        <url-pattern>/checkout.jsp</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>FilterAccount</filter-name>
+        <url-pattern>/changePass</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>FilterAccount</filter-name>
+        <url-pattern>/myOrder</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>controller.HomeServlet</servlet-class>
@@ -8,6 +36,4 @@
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-    
-
 </web-app>

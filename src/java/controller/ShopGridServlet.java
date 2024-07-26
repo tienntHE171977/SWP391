@@ -84,7 +84,7 @@ public class ShopGridServlet extends HttpServlet {
     List<Trademark> trademarks = trademarkDAO.getAllTrademark();
 
     // Phân trang
-    int pageSize = 9;
+    int pageSize = 12;
     String pageStr = request.getParameter("page");
     int page = (pageStr != null && !pageStr.isEmpty()) ? Integer.parseInt(pageStr) : 1;
     int totalPages;
